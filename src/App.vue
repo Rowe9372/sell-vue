@@ -1,0 +1,77 @@
+<template>
+  <div id="app">
+    <!-- <img src="./assets/logo.png">
+    <router-view/> -->
+    <sellerHeader :seller="seller"></sellerHeader>
+    <div class="tab">
+        <div class="item-tab">
+          <router-link to='/goods'>商品</router-link>
+        </div>
+        <div class="item-tab">
+          <router-link to='/rating'>评论</router-link>
+        </div>
+        <div class="item-tab">
+          <router-link to='/seller'>商家</router-link>
+        </div>
+    </div>
+    <!-- 路由出口 -->
+    <router-view :seller="seller"></router-view>
+
+  </div>
+</template>
+
+<script type="text/ecmascript-6">
+import sellerHeader from './components/seller/sellerHeader'
+
+const ERR_OK = 0
+export default {
+  data() {
+    return {
+      seller: {}
+    }
+  },
+  created() {
+    this.$http.get('./api/seller').then(response => {
+      /* success callback */
+      response = response.body
+      console.log(response)
+      /* status code */
+      if (response.errno === ERR_OK) {
+        this.seller = response.data
+        console.log(this.seller)
+      }
+    }, response => {
+      /* error callback */
+    })
+  },
+  name: 'App',
+  components: {
+    sellerHeader
+  }
+}
+</script>
+
+<style lang="scss" type="text/scss">
+    #app {
+      .tab {
+        display:flex;
+        width:100%;
+        height: (80rem/30);
+        line-height: (80rem/30);
+        box-sizing: border-box;
+        border-bottom: 1px solid #e5e5e5;
+        .item-tab {
+          flex:1;
+          text-align: center;
+          a {
+            display: block;
+            font-size: (28rem/30);
+            color: rgb(77,85,93);
+            &.active {
+              color: rgb(240,20,20);
+            }
+          }
+        }
+      }
+    }
+</style>

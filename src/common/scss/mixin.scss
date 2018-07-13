@@ -1,0 +1,41 @@
+@mixin bg-img($url) {
+    background-image: url($url + '@2x.png');
+    @media (-webkit-min-device-pixel-ratio: 3), (min-device-pixel-ratio: 3) {
+    	background-image: url($url + '@3x.png');
+    }
+}
+
+@mixin border-bottom-1px($color) {
+	position: relative;
+	&:after {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		border-bottom: 1px solid $color;
+		content: ' ';
+	}
+}
+@mixin border-none {
+	&:after {
+		display: none;
+	}
+}
+
+@media (-webkit-min-device-pixl-ratio: 1.5), (min-device-pixel-ratio: 1.5) {
+	.border-1px {
+		&:after {
+			-webkit-transform: scaleY(0.7);
+			transform: scaleY(0.7);
+		}
+	}
+}
+
+@media (-webkit-min-device-pixl-ratio: 2), (min-device-pixel-ratio: 2) {
+	.border-1px {
+		&:after {
+			-webkit-transform: scaleY(0.5);
+			transform: scaleY(0.5);
+		}
+	}
+}
