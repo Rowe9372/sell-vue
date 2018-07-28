@@ -1,12 +1,12 @@
 <template>
 	<div class="catcontrol">
 		<transition name="silde-fade">
-			<span class="cat-decrease span icon-remove_circle_outline" @click="decrease" v-show="food.count > 0"></span>
+			<span class="cat-decrease span icon-remove_circle_outline" @click.stop="decrease" v-show="food.count > 0"></span>
 		</transition>
 		<transition name="silde-fade">
 			<span class="cat-count span" v-show="food.count > 0">{{food.count}}</span>
 		</transition>
-		<span class="cat-add span icon-add_circle" @click="add"></span>
+		<span class="cat-add span icon-add_circle" @click.stop="add"></span>
 	</div>
 </template>
 
@@ -19,12 +19,16 @@ import Vue from 'vue'
 			}
 		},
 		methods: {
-			add() {
+			add(event) {
 				if (!this.food.count) {
 					Vue.set(this.food, 'count', 1)
 				} else {
 					this.food.count++
+					console.log(this.food.count)
 				}
+			// 设置滚动对象时，点击加号，设置一个派发事件，将DOM对象传出去,将target（DOM）作为cart.add事件的对象传入
+			// $emit, $on, $off 分别来分发、监听、取消监听事件：
+				this.$emit('cat-add', event.target)
 			},
 			decrease() {
 				this.food.count--

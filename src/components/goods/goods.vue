@@ -17,7 +17,7 @@
 				<li v-for="good in goods" class="foods-class foodsHook" :key="good.id">
 					<h2 class="foods-class-name">{{good.name}}</h2>
 					<ul class="foods-list">
-						<li v-for="food in good.foods" class="foods-item" :key="food.id">
+						<li v-for="food in good.foods" class="foods-item" :key="food.id" @click="checkFood(food)">
 							<div class="food-icon">
 								<img :src="food.icon" alt="" class="img">
 							</div>
@@ -34,7 +34,7 @@
 								</div>
 								<!-- cat control -->
 								<div class="catcontrol-wrap">
-									<catcontrol :food="food"></catcontrol>
+									<catcontrol :food="food" @cat-add="catAdd"></catcontrol>
 								</div>
 							</div>
 						</li>
@@ -42,9 +42,11 @@
 				</li>
 			</ul>
 		</div>
-		    <!-- shopping cat -->
-   		 <shopcat :selectFoods="selectFoods" :deliveryPrice="seller.deliveryPrice" :minPrice="seller.minPrice"></shopcat>
+		<!-- shopping cat -->
+   		<shopcat ref="shopcat" :selectFoods="selectFoods" :deliveryPrice="seller.deliveryPrice" :minPrice="seller.minPrice"></shopcat>
 
+   		<!-- food detail -->
+		<foodDetail ref="foodDetail" :food="foodMsg"></foodDetail>
 	</div>
 </template>
 
@@ -52,6 +54,7 @@
 import BScroll from 'better-scroll'
 import shopcat from '../shopcat/shopcat'
 import catcontrol from '../catcontrol/catcontrol'
+import foodDetail from '../food/food'
 
 const ERR_OK = 0
 export default {
@@ -64,7 +67,8 @@ export default {
 		return {
 			goods: [],
 			listHeight: [],
-			scrollY: 0
+			scrollY: 0,
+			foodMsg: {}
 		}
 	},
 	computed: {
@@ -146,11 +150,23 @@ export default {
 			let el = foodsClass[index]
 			/* scroll 方法滑动到指定元素 */
 			this.foodsWrap.scrollToElement(el, 300)
+		},
+		catAdd(target) {
+			// 拿到traget(DOM对象)之后，将其传入shopcart组件中drop(target){}方法，
+     		// 此处用this.$refs调用子组件,访问DOM时用的是ref="menuWrapper
+     		this.$nextTick(() => {
+     			this.$refs.shopcat.drop(target)
+     		})
+		},
+		checkFood(food) {
+			this.foodMsg = food
+			this.$refs.foodDetail.show()
 		}
 	},
 	components: {
 		shopcat,
-		catcontrol
+		catcontrol,
+		foodDetail
 	}
 }
 </script>
