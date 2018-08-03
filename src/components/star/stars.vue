@@ -62,6 +62,9 @@
 				height: (40rem/30);
 				margin-right: (44rem/30);
 				background-size: (40rem/30) (40rem/30);
+				&:last-child {
+					margin-right: 0;
+				}
 				&.on {
 					@include bg-img('star48_on');
 				}
@@ -79,6 +82,9 @@
 				height: (30rem/30);
 				margin-right: (12rem/30);
 				background-size: (30rem/30) (30rem/30);
+				&:last-child {
+					margin-right: 0;
+				}
 				&.on {
 					@include bg-img('star36_on');
 				}
@@ -96,6 +102,9 @@
 				height: (20rem/30);
 				margin-right: (6rem/30);
 				background-size: (20rem/30) (20rem/30);
+				&:last-child {
+					margin-right: 0;
+				}
 				&.on {
 					@include bg-img('star24_on');
 				}
