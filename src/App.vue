@@ -21,23 +21,33 @@
 </template>
 
 <script type="text/ecmascript-6">
+import {urlParse} from './common/js/urlParse'
 import sellerHeader from './components/seller/sellerHeader'
 
 const ERR_OK = 0
 export default {
   data() {
     return {
-      seller: {}
+      seller: {
+        // 解析url传参，获取商家id
+        id: (() => {
+          let queryParam = urlParse()
+          console.log(queryParam)
+          return queryParam.id
+        })()
+      }
     }
   },
   created() {
-    this.$http.get('./api/seller').then(response => {
+    this.$http.get('./api/seller?id=' + this.seller.id).then(response => {
       /* success callback */
       response = response.body
       console.log(response)
       /* status code */
       if (response.errno === ERR_OK) {
-        this.seller = response.data
+        // this.seller = response.data
+        // 将id添加到数据里面  ES6 Object.assign方法
+        this.seller = Object.assign(response.data, this.seller)
         console.log(this.seller)
       }
     }, response => {
