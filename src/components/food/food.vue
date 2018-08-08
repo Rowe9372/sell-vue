@@ -20,7 +20,7 @@
 					</div>
 					<div class="join">
 						<transition name="joinFade">
-							<span class="join-cat" v-show="food.count === 0" @click="addCat">加入购物车</span>
+							<span class="join-cat" v-show="!food.count | food.count === 0" @click="addCat">加入购物车</span>
 						</transition>
 						<catcontrol :food="food" v-show="food.count > 0"></catcontrol>
 					</div>

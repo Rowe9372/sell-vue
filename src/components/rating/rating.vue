@@ -1,5 +1,5 @@
 <template>
-	<div class="rating-wrap" ref="ratingWrap">
+	<div class="ratings-wrap" ref="ratingWrap">
 		<div class="rating-content">
 			<div class="exponent">
 				<div class="left">
@@ -143,7 +143,7 @@ export default {
 @import "../../common/scss/base";
 @import "../../common/scss/mixin";
 
-.rating-wrap {
+.ratings-wrap {
 	position: absolute;
 	top: (348rem/30);
 	left: 0;

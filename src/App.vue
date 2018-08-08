@@ -14,8 +14,10 @@
           <router-link to='/seller'>商家</router-link>
         </div>
     </div>
-    <!-- 路由出口 -->
-    <router-view :seller="seller"></router-view>
+    <!-- 路由出口  keep-alive保存当前状态-->
+    <keep-alive>
+        <router-view :seller="seller"></router-view>
+    </keep-alive>  
 
   </div>
 </template>

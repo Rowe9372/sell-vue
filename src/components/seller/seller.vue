@@ -85,6 +85,7 @@
 
 <script type="text/ecmascript-6">
 import BScroll from 'better-scroll'
+import {saveToLocal, loadFromLocal} from '../../common/js/store'
 import star from '../star/stars'
 import shopcat from '../shopcat/shopcat'
 export default {
@@ -98,7 +99,9 @@ export default {
 			selectFoods: [],
 			classMap: ['decrease', 'discount', 'special', 'invoice', 'guarantee'],
 			width: '',
-			favorite: false
+			favorite: (() => {
+				return loadFromLocal(this.seller.id, 'favorite', false)
+			})()
 		}
 	},
 	created() {
@@ -131,6 +134,7 @@ export default {
 	methods: {
 		toggleFavorite() {
 			this.favorite = !this.favorite
+			saveToLocal(this.seller.id, 'favorite', this.favorite)
 		}
 	},
 	components: {
